@@ -53,18 +53,24 @@ namespace C_sharp_basics
                     case 3:
                         Console.WriteLine("Upišite ime pjesme koju želite odabrati.");
                         var songName = Console.ReadLine();
+                        var controlCounter = 0;
                         foreach (var pair in playlist)
                         {
-                            if (pair.Value == songName)
+                            bool equality1 = pair.Value.Equals(songName, StringComparison.OrdinalIgnoreCase);
+                            if (equality1 == true)
                             {
-                                Console.WriteLine(pair.Key);
+                                Console.WriteLine($"Zatražena pjesma nalazi se pod rednim brojem: {pair.Key}");
                             }
                             else
                             {
-                                Console.WriteLine("Zatražena pjesma ne postoji u listi");
-                                Decision();
+                                controlCounter++;
                             }
                         }
+                        if (controlCounter >= playlist.Count)
+                        {
+                            Console.WriteLine("Zatražena pjesma ne postoji u listi");
+                        }
+                        mainVariable = Decision();
                         break;
                     case 4:
                         Console.WriteLine("Unesite ime pjesme koju želite dodati.");
