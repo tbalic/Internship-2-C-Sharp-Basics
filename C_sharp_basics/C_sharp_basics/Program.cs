@@ -22,13 +22,14 @@ namespace C_sharp_basics
                 { 10, "Kings Of Leon - Use somebody" }
             };
 
-        
+            var mainVariable = Menu();
 
             switch (Menu())
             {
                 case 0:
                     break;
                 case 1:
+                    Console.WriteLine("Lista svih pjesama");
                     foreach (var pair in playlist)
                     {
                         Console.WriteLine(pair.Key + " " + pair.Value);
@@ -198,7 +199,7 @@ namespace C_sharp_basics
                             var newNumber = int.Parse(Console.ReadLine());
                             var keeper = playlist[newNumber];
                             playlist[newNumber] = playlist[changeNumber];
-                            for (int i = 0; i < Math.Abs(newNumber - changeNumber); i++)
+                            for (var i = 0; i < Math.Abs(newNumber - changeNumber); i++)
                             {
                                 playlist[changeNumber - i] = playlist[changeNumber - i - 1];
                             }
@@ -269,7 +270,6 @@ namespace C_sharp_basics
                 {
                     Console.WriteLine("Kraj programa");
                     return;
-                    
                 }
             }
         }

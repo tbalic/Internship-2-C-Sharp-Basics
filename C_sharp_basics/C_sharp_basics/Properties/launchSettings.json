@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "C_sharp_basics": {
+      "commandName": "Project",
+      "sqlDebugging": false,
+      "nativeDebugging": false
+    }
+  }
+}
