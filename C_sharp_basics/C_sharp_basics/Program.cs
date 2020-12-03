@@ -75,22 +75,30 @@ namespace C_sharp_basics
                     case 4:
                         Console.WriteLine("Unesite ime pjesme koju želite dodati.");
                         var newSongName = Console.ReadLine();
+                        var secondCounter = 0;
                         foreach (var pair in playlist)
                         {
-                            if (pair.Value == newSongName)
+                            bool equality2 = pair.Value.Equals(newSongName, StringComparison.OrdinalIgnoreCase);
+                            if (equality2 == true)
                             {
                                 Console.WriteLine("Nemoguće dodati pjesmu, pjesma je već u listi.");
-                                Decision();
+                                mainVariable = Decision();
                             }
                             else
                             {
-                                playlist.Add(playlist.Count + 1, newSongName);
+                                secondCounter++;
                             }
                         }
-                        foreach (var pair in playlist)
+                        if (secondCounter == playlist.Count)
                         {
-                            Console.WriteLine(pair.Key + " " + pair.Value);
+                            playlist.Add(playlist.Count + 1, newSongName);
+                            Console.WriteLine("Ažuriran popis pjesama.");
+                            foreach (var pair in playlist)
+                            {
+                                Console.WriteLine(pair.Key + " " + pair.Value);
+                            }
                         }
+                        mainVariable = Decision();
                         break;
                     case 5:
                         Console.WriteLine("Unesite redni broj pjesme koju želite izbrisati.");
