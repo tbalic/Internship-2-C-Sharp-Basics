@@ -320,6 +320,8 @@ namespace C_sharp_basics
                         mainVariable = Decision();
                         break;
                     default:
+                        Console.WriteLine("Odabrani broj ne postoji u izborniku.");
+                        mainVariable = Decision();
                         break;
                 }
                 if (mainVariable == 100)
