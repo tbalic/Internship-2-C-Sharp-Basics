@@ -215,46 +215,89 @@ namespace C_sharp_basics
                     case 8:
                         Console.WriteLine("Unesite broj pjesme kojoj želite promijeniti ime.");
                         var changeName = int.Parse(Console.ReadLine());
-                        foreach (var pair in playlist)
+                        var chosenSong = 0;
+                        var controler = 0;
+                        if (changeName <= playlist.Count && changeName > 0)
                         {
-                            if (pair.Value == playlist[changeName])
+                            for (var i = 1; i <= playlist.Count; i++)
                             {
-                                Console.WriteLine("Unesite novo ime kako želite preimenovati pjesmu.");
-                                var newName = Console.ReadLine();
-                                (playlist[changeName]) = newName;
+                                if (i == changeName)
+                                {
+                                    chosenSong = i;
+                                }
+                                else
+                                {
+                                    controler++;
+                                }
+                            }
+                            if (controler == playlist.Count)
+                            {
+                                Console.WriteLine("Zatraženi broj ne postoji u listi");
+                                mainVariable = Decision();
                             }
                             else
                             {
-                                Console.WriteLine("Zatraženi broj ne postoji u listi");
-                                Decision();
+                                Console.WriteLine("Unesite novo ime kako želite preimenovati pjesmu.");
+                                var newName = Console.ReadLine();
+                                (playlist[chosenSong]) = newName;
+                                mainVariable = Decision();
                             }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Zatražena pjesma ne postoji u listi");
+                            mainVariable = Decision();
                         }
                         break;
                     case 9:
                         Console.WriteLine("Unesite broj pjesme kojoj želite promijeniti mjesto.");
                         var changeNumber = int.Parse(Console.ReadLine());
-                        foreach (var pair in playlist)
+                        if (changeNumber <= playlist.Count && changeNumber > 0)
                         {
-                            if (pair.Key == changeNumber)
+                            Console.WriteLine("Unesite novi redni broj na koji želite premjestiti pjesmu.");
+                            var newNumber = int.Parse(Console.ReadLine());
+                            if (newNumber <= playlist.Count && newNumber > 0)
                             {
-                                Console.WriteLine("Unesite novi redni broj na koji želite premjestiti pjesmu.");
-                                var newNumber = int.Parse(Console.ReadLine());
-                                var keeper = playlist[newNumber];
+                                var valueKeeper = playlist[newNumber];
                                 playlist[newNumber] = playlist[changeNumber];
-                                for (var i = 0; i < Math.Abs(newNumber - changeNumber); i++)
+                                if (newNumber < changeNumber)
                                 {
-                                    playlist[changeNumber - i] = playlist[changeNumber - i - 1];
+                                    for (var i = 0; i < (Math.Abs(newNumber - changeNumber) - 1); i++)
+                                    {
+                                        playlist[changeNumber - i] = playlist[changeNumber - i - 1];
+                                    }
+                                    playlist[newNumber + 1] = valueKeeper;
                                 }
+                                else if (newNumber == changeNumber)
+                                {
+                                    playlist[changeNumber] = playlist[newNumber];
+                                }
+                                else
+                                {
+                                    for (var i = 0; i < (Math.Abs(newNumber - changeNumber) - 1); i++)
+                                    {
+                                        playlist[changeNumber + i] = playlist[changeNumber + i + 1];
+                                    }
+                                    playlist[newNumber - 1] = valueKeeper;
+                                }
+                                Console.WriteLine("Ažurirana lista.");
+                                foreach (var pair in playlist)
+                                {
+                                    Console.WriteLine(pair.Key + " " + pair.Value);
+                                }
+                                mainVariable = Decision();
                             }
-                            else if (changeNumber > playlist.Count)
+                            else
                             {
                                 Console.WriteLine("Zatraženi broj ne postoji u listi");
-                                Decision();
+                                mainVariable = Decision();
                             }
+
                         }
-                        foreach (var pair in playlist)
+                        else
                         {
-                            Console.WriteLine(pair.Key + " " + pair.Value);
+                            Console.WriteLine("Zatraženi broj ne postoji u listi");
+                            mainVariable = Decision();
                         }
                         break;
                     case 10:
