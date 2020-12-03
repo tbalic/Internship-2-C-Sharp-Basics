@@ -103,87 +103,113 @@ namespace C_sharp_basics
                     case 5:
                         Console.WriteLine("Unesite redni broj pjesme koju želite izbrisati.");
                         var deleteSongNumber = int.Parse(Console.ReadLine());
+                        var checkingVariable = 0;
                         var helpVariable = 0;
-                        var addition = 0;
                         Console.WriteLine("Odabrali ste opciju brisanja pjesme. Jeste li sigurni da želite nastaviti s ovom akcijom? (da/ne)");
                         var answer1 = Console.ReadLine();
-                        if (answer1 == "da")
+                        bool equality = answer1.Equals("da", StringComparison.OrdinalIgnoreCase);
+                        if (equality == true)
                         {
-                            foreach (var pair in playlist)
+                            for (var i = 1; i <= playlist.Count; i++)
                             {
-                                if (pair.Key == deleteSongNumber)
+                                if (i == deleteSongNumber)
                                 {
-                                    playlist.Remove(pair.Key);
-                                }
-                                else if (pair.Key > deleteSongNumber)
-                                {
-                                    playlist.Add(deleteSongNumber + addition, pair.Value);
-                                    playlist.Remove(pair.Key);
+                                    checkingVariable = i;
                                 }
                                 else
                                 {
                                     helpVariable = helpVariable++;
                                 }
-                                addition = addition++;
                             }
                             if (helpVariable == playlist.Count)
                             {
                                 Console.WriteLine("Zatražena pjesma ne postoji u listi");
-                                Decision();
+                                mainVariable = Decision();
                             }
-                            foreach (var pair in playlist)
+                            else
                             {
-                                Console.WriteLine(pair.Key + " " + pair.Value);
+                                playlist.Remove(checkingVariable);
+                                playlist.Add(checkingVariable, playlist[checkingVariable + 1]);
+                                for (var i = checkingVariable + 1; i <= playlist.Count; i++)
+                                {
+                                    playlist[i - 1] = playlist[i];
+                                }
+                                playlist.Remove(playlist.Count);
+                                Console.WriteLine("Ažurirana lista pjesama.");
+                                foreach (var pair in playlist)
+                                {
+                                    Console.WriteLine(pair.Key + " " + pair.Value);
+                                }
+                                mainVariable = Decision();
                             }
                         }
                         else
                         {
-                            Decision();
+                            mainVariable = Decision();
                         }
                         break;
                     case 6:
                         Console.WriteLine("Unesite ime pjesme koju želite izbrisati.");
                         var deleteSongName = Console.ReadLine();
+                        var songToDelete = 0;
                         var keyCounter = 0;
                         Console.WriteLine("Odabrali ste opciju brisanja pjesme. Jeste li sigurni da želite nastaviti s ovom akcijom? (da/ne)");
                         var answer2 = Console.ReadLine();
-                        if (answer2 == "da")
+                        bool equality3 = answer2.Equals("da", StringComparison.OrdinalIgnoreCase);
+                        if (equality3 == true)
                         {
                             foreach (var pair in playlist)
                             {
-                                if (pair.Value == deleteSongName)
+                                bool equality4 = pair.Value.Equals(deleteSongName, StringComparison.OrdinalIgnoreCase);
+                                if (equality4 == true)
                                 {
-                                    playlist.Remove(pair.Key);
-                                    playlist.Add(pair.Key + keyCounter, playlist[(pair.Key) + keyCounter + 1]);
-                                    keyCounter = keyCounter++;
+                                    songToDelete = pair.Key;
                                 }
                                 else
                                 {
-                                    keyCounter = 0;
+                                    keyCounter++;
                                 }
-
                             }
-                            if (keyCounter == 0)
+                            if (keyCounter == playlist.Count)
                             {
                                 Console.WriteLine("Zatražena pjesma ne postoji u listi");
-                                Decision();
+                                mainVariable = Decision();
+                            }
+                            else
+                            {
+                                playlist.Remove(songToDelete);
+                                playlist.Add(songToDelete, playlist[songToDelete + 1]);
+                                for (var i = songToDelete + 1; i <= playlist.Count; i++)
+                                {
+                                    playlist[i - 1] = playlist[i];
+                                }
+                                playlist.Remove(playlist.Count);
+                                Console.WriteLine("Ažurirana lista pjesama.");
+                                foreach (var pair in playlist)
+                                {
+                                    Console.WriteLine(pair.Key + " " + pair.Value);
+                                }
+                                mainVariable = Decision();
                             }
                         }
                         else
                         {
-                            Decision();
+                            mainVariable = Decision();
                         }
                         break;
                     case 7:
                         Console.WriteLine("Odabrali ste opciju brisanja cijele liste. Jeste li sigurni da želite nastaviti s ovom akcijom? (da/ne)");
-                        var answer = Console.ReadLine();
-                        if (answer == "da")
+                        var answer3 = Console.ReadLine();
+                        bool equality5 = answer3.Equals("da", StringComparison.OrdinalIgnoreCase);
+                        if (equality5 == true)
                         {
                             playlist.Clear();
+                            Console.WriteLine("Lista pjesama je prazna.");
+                            mainVariable = Decision();
                         }
                         else
                         {
-                            Decision();
+                            mainVariable = Decision();
                         }
                         break;
                     case 8:
