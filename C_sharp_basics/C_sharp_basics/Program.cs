@@ -24,7 +24,22 @@ namespace C_sharp_basics
 
             var mainVariable = Menu();
 
-            switch (Menu())
+            while (mainVariable != 0)
+            {
+
+                if (mainVariable == 100)
+                {
+                    break;
+                }
+                mainVariable = Menu();
+                if (mainVariable == 0)
+                {
+                    break;
+                }
+            }
+
+
+                switch (Menu())
             {
                 case 0:
                     break;
