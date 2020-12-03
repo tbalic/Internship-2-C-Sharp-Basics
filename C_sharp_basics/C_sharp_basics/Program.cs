@@ -317,6 +317,7 @@ namespace C_sharp_basics
                         {
                             Console.WriteLine(pair.Key + " " + pair.Value);
                         }
+                        mainVariable = Decision();
                         break;
                     default:
                         break;
