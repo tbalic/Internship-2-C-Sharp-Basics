@@ -258,18 +258,21 @@ namespace C_sharp_basics
 
             }
 
-            static void Decision()
+            static int Decision()
             {
                 Console.WriteLine("Povratak na izbornik?(da/ne)");
                 var goBack = Console.ReadLine();
-                if (goBack == "da")
+                bool equality = goBack.Equals("da", StringComparison.OrdinalIgnoreCase);
+                if (equality == true)
                 {
-                    Menu();
+                    var finalDecision = 0;
+                    return finalDecision;
                 }
                 else
                 {
                     Console.WriteLine("Kraj programa");
-                    return;
+                    var finalDecision = 100;
+                    return finalDecision;
                 }
             }
         }
