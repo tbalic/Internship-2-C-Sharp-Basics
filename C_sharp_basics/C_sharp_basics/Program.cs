@@ -26,7 +26,218 @@ namespace C_sharp_basics
 
             while (mainVariable != 0)
             {
+                switch (mainVariable)
+                {
+                    case 1:
+                        Console.WriteLine("Lista svih pjesama");
+                        foreach (var pair in playlist)
+                        {
+                            Console.WriteLine(pair.Key + " " + pair.Value);
+                        }
+                        mainVariable = Decision();
+                        break;
+                    case 2:
+                        Console.WriteLine("Upišite redni broj pjesme koju želite odabrati.");
+                        var songNumber = int.Parse(Console.ReadLine());
+                        if (songNumber <= playlist.Count && songNumber > 0)
+                        {
+                            Console.WriteLine(playlist[songNumber]);
+                            mainVariable = Decision();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Zatražena pjesma ne postoji u listi");
+                            mainVariable = Decision();
+                        }
+                        break;
+                    case 3:
+                        Console.WriteLine("Upišite ime pjesme koju želite odabrati.");
+                        var songName = Console.ReadLine();
+                        foreach (var pair in playlist)
+                        {
+                            if (pair.Value == songName)
+                            {
+                                Console.WriteLine(pair.Key);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Zatražena pjesma ne postoji u listi");
+                                Decision();
+                            }
+                        }
+                        break;
+                    case 4:
+                        Console.WriteLine("Unesite ime pjesme koju želite dodati.");
+                        var newSongName = Console.ReadLine();
+                        foreach (var pair in playlist)
+                        {
+                            if (pair.Value == newSongName)
+                            {
+                                Console.WriteLine("Nemoguće dodati pjesmu, pjesma je već u listi.");
+                                Decision();
+                            }
+                            else
+                            {
+                                playlist.Add(playlist.Count + 1, newSongName);
+                            }
+                        }
+                        foreach (var pair in playlist)
+                        {
+                            Console.WriteLine(pair.Key + " " + pair.Value);
+                        }
+                        break;
+                    case 5:
+                        Console.WriteLine("Unesite redni broj pjesme koju želite izbrisati.");
+                        var deleteSongNumber = int.Parse(Console.ReadLine());
+                        var helpVariable = 0;
+                        var addition = 0;
+                        Console.WriteLine("Odabrali ste opciju brisanja pjesme. Jeste li sigurni da želite nastaviti s ovom akcijom? (da/ne)");
+                        var answer1 = Console.ReadLine();
+                        if (answer1 == "da")
+                        {
+                            foreach (var pair in playlist)
+                            {
+                                if (pair.Key == deleteSongNumber)
+                                {
+                                    playlist.Remove(pair.Key);
+                                }
+                                else if (pair.Key > deleteSongNumber)
+                                {
+                                    playlist.Add(deleteSongNumber + addition, pair.Value);
+                                    playlist.Remove(pair.Key);
+                                }
+                                else
+                                {
+                                    helpVariable = helpVariable++;
+                                }
+                                addition = addition++;
+                            }
+                            if (helpVariable == playlist.Count)
+                            {
+                                Console.WriteLine("Zatražena pjesma ne postoji u listi");
+                                Decision();
+                            }
+                            foreach (var pair in playlist)
+                            {
+                                Console.WriteLine(pair.Key + " " + pair.Value);
+                            }
+                        }
+                        else
+                        {
+                            Decision();
+                        }
+                        break;
+                    case 6:
+                        Console.WriteLine("Unesite ime pjesme koju želite izbrisati.");
+                        var deleteSongName = Console.ReadLine();
+                        var keyCounter = 0;
+                        Console.WriteLine("Odabrali ste opciju brisanja pjesme. Jeste li sigurni da želite nastaviti s ovom akcijom? (da/ne)");
+                        var answer2 = Console.ReadLine();
+                        if (answer2 == "da")
+                        {
+                            foreach (var pair in playlist)
+                            {
+                                if (pair.Value == deleteSongName)
+                                {
+                                    playlist.Remove(pair.Key);
+                                    playlist.Add(pair.Key + keyCounter, playlist[(pair.Key) + keyCounter + 1]);
+                                    keyCounter = keyCounter++;
+                                }
+                                else
+                                {
+                                    keyCounter = 0;
+                                }
 
+                            }
+                            if (keyCounter == 0)
+                            {
+                                Console.WriteLine("Zatražena pjesma ne postoji u listi");
+                                Decision();
+                            }
+                        }
+                        else
+                        {
+                            Decision();
+                        }
+                        break;
+                    case 7:
+                        Console.WriteLine("Odabrali ste opciju brisanja cijele liste. Jeste li sigurni da želite nastaviti s ovom akcijom? (da/ne)");
+                        var answer = Console.ReadLine();
+                        if (answer == "da")
+                        {
+                            playlist.Clear();
+                        }
+                        else
+                        {
+                            Decision();
+                        }
+                        break;
+                    case 8:
+                        Console.WriteLine("Unesite broj pjesme kojoj želite promijeniti ime.");
+                        var changeName = int.Parse(Console.ReadLine());
+                        foreach (var pair in playlist)
+                        {
+                            if (pair.Value == playlist[changeName])
+                            {
+                                Console.WriteLine("Unesite novo ime kako želite preimenovati pjesmu.");
+                                var newName = Console.ReadLine();
+                                (playlist[changeName]) = newName;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Zatraženi broj ne postoji u listi");
+                                Decision();
+                            }
+                        }
+                        break;
+                    case 9:
+                        Console.WriteLine("Unesite broj pjesme kojoj želite promijeniti mjesto.");
+                        var changeNumber = int.Parse(Console.ReadLine());
+                        foreach (var pair in playlist)
+                        {
+                            if (pair.Key == changeNumber)
+                            {
+                                Console.WriteLine("Unesite novi redni broj na koji želite premjestiti pjesmu.");
+                                var newNumber = int.Parse(Console.ReadLine());
+                                var keeper = playlist[newNumber];
+                                playlist[newNumber] = playlist[changeNumber];
+                                for (var i = 0; i < Math.Abs(newNumber - changeNumber); i++)
+                                {
+                                    playlist[changeNumber - i] = playlist[changeNumber - i - 1];
+                                }
+                            }
+                            else if (changeNumber > playlist.Count)
+                            {
+                                Console.WriteLine("Zatraženi broj ne postoji u listi");
+                                Decision();
+                            }
+                        }
+                        foreach (var pair in playlist)
+                        {
+                            Console.WriteLine(pair.Key + " " + pair.Value);
+                        }
+                        break;
+                    case 10:
+                        Console.WriteLine("Shuffle pjesama.");
+                        var ListOfKeys = new List<int>() { };
+                        foreach (var pair in playlist)
+                        {
+                            ListOfKeys.Add(pair.Key);
+                        }
+                        var shuffled = ListOfKeys.OrderBy(x => Guid.NewGuid()).ToList();
+                        var ShuffledMix = new Dictionary<int, string>() { };
+                        foreach (var element in shuffled)
+                        {
+                            ShuffledMix.Add(element, playlist[element]);
+                        }
+                        foreach (var pair in ShuffledMix)
+                        {
+                            Console.WriteLine(pair.Key + " " + pair.Value);
+                        }
+                        break;
+                    default:
+                        break;
+                }
                 if (mainVariable == 100)
                 {
                     break;
@@ -39,218 +250,7 @@ namespace C_sharp_basics
             }
 
 
-                switch (Menu())
-            {
-                case 0:
-                    break;
-                case 1:
-                    Console.WriteLine("Lista svih pjesama");
-                    foreach (var pair in playlist)
-                    {
-                        Console.WriteLine(pair.Key + " " + pair.Value);
-                    }
-                    break;
-                case 2:
-                    Console.WriteLine("Upišite redni broj pjesme koju želite odabrati.");
-                    var songNumber = int.Parse(Console.ReadLine());
-                    if (songNumber <= playlist.Count && songNumber > 0)
-                    {
-                        Console.WriteLine(playlist[songNumber]);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Zatražena pjesma ne postoji u listi");
-                        Decision();
-                    }
-                    break;
-                case 3:
-                    Console.WriteLine("Upišite ime pjesme koju želite odabrati.");
-                    var songName = Console.ReadLine();
-                    foreach (var pair in playlist)
-                    {
-                        if (pair.Value == songName)
-                        {
-                            Console.WriteLine(pair.Key);
-                        }
-                        else
-                        {
-                            Console.WriteLine("Zatražena pjesma ne postoji u listi");
-                            Decision();
-                        }
-                    }
-                    break;
-                case 4:
-                    Console.WriteLine("Unesite ime pjesme koju želite dodati.");
-                    var newSongName = Console.ReadLine();
-                    foreach (var pair in playlist)
-                    {
-                        if (pair.Value == newSongName)
-                        {
-                            Console.WriteLine("Nemoguće dodati pjesmu, pjesma je već u listi.");
-                            Decision();
-                        }
-                        else
-                        {
-                            playlist.Add(playlist.Count + 1, newSongName);
-                        }
-                    }
-                    foreach (var pair in playlist)
-                    {
-                        Console.WriteLine(pair.Key + " " + pair.Value);
-                    }
-                    break;
-                case 5:
-                    Console.WriteLine("Unesite redni broj pjesme koju želite izbrisati.");
-                    var deleteSongNumber = int.Parse(Console.ReadLine());
-                    var helpVariable = 0;
-                    var addition = 0;
-                    Console.WriteLine("Odabrali ste opciju brisanja pjesme. Jeste li sigurni da želite nastaviti s ovom akcijom? (da/ne)");
-                    var answer1 = Console.ReadLine();
-                    if (answer1 == "da")
-                    {
-                        foreach (var pair in playlist)
-                        {
-                            if (pair.Key == deleteSongNumber)
-                            {
-                                playlist.Remove(pair.Key);
-                            }
-                            else if (pair.Key > deleteSongNumber)
-                            {
-                                playlist.Add(deleteSongNumber + addition, pair.Value);
-                                playlist.Remove(pair.Key);
-                            }
-                            else
-                            {
-                                helpVariable = helpVariable++;
-                            }
-                            addition = addition++;
-                        }
-                        if (helpVariable == playlist.Count)
-                        {
-                            Console.WriteLine("Zatražena pjesma ne postoji u listi");
-                            Decision();
-                        }
-                        foreach (var pair in playlist)
-                        {
-                            Console.WriteLine(pair.Key + " " + pair.Value);
-                        }
-                    }
-                    else
-                    {
-                        Decision();
-                    }
-                    break;
-                case 6:
-                    Console.WriteLine("Unesite ime pjesme koju želite izbrisati.");
-                    var deleteSongName = Console.ReadLine();
-                    var keyCounter = 0;
-                    Console.WriteLine("Odabrali ste opciju brisanja pjesme. Jeste li sigurni da želite nastaviti s ovom akcijom? (da/ne)");
-                    var answer2 = Console.ReadLine();
-                    if (answer2 == "da")
-                    {
-                        foreach (var pair in playlist)
-                        {
-                            if (pair.Value == deleteSongName)
-                            {
-                                playlist.Remove(pair.Key);
-                                playlist.Add(pair.Key + keyCounter, playlist[(pair.Key) + keyCounter + 1]);
-                                keyCounter = keyCounter++;
-                            }
-                            else
-                            {
-                                keyCounter = 0;
-                            }
-
-                        }
-                        if (keyCounter == 0)
-                        {
-                            Console.WriteLine("Zatražena pjesma ne postoji u listi");
-                            Decision();
-                        }
-                    }
-                    else
-                    {
-                        Decision();
-                    }
-                    break;
-                case 7:
-                    Console.WriteLine("Odabrali ste opciju brisanja cijele liste. Jeste li sigurni da želite nastaviti s ovom akcijom? (da/ne)");
-                    var answer = Console.ReadLine();
-                    if (answer == "da")
-                    {
-                        playlist.Clear();
-                    }
-                    else
-                    {
-                        Decision();
-                    }
-                    break;
-                case 8:
-                    Console.WriteLine("Unesite broj pjesme kojoj želite promijeniti ime.");
-                    var changeName = int.Parse(Console.ReadLine());
-                    foreach (var pair in playlist)
-                    {
-                        if (pair.Value == playlist[changeName])
-                        {
-                            Console.WriteLine("Unesite novo ime kako želite preimenovati pjesmu.");
-                            var newName = Console.ReadLine();
-                            (playlist[changeName]) = newName;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Zatraženi broj ne postoji u listi");
-                            Decision();
-                        }
-                    }
-                    break;
-                case 9:
-                    Console.WriteLine("Unesite broj pjesme kojoj želite promijeniti mjesto.");
-                    var changeNumber = int.Parse(Console.ReadLine());
-                    foreach (var pair in playlist)
-                    {
-                        if (pair.Key == changeNumber)
-                        {
-                            Console.WriteLine("Unesite novi redni broj na koji želite premjestiti pjesmu.");
-                            var newNumber = int.Parse(Console.ReadLine());
-                            var keeper = playlist[newNumber];
-                            playlist[newNumber] = playlist[changeNumber];
-                            for (var i = 0; i < Math.Abs(newNumber - changeNumber); i++)
-                            {
-                                playlist[changeNumber - i] = playlist[changeNumber - i - 1];
-                            }
-                        }
-                        else if (changeNumber > playlist.Count)
-                        {
-                            Console.WriteLine("Zatraženi broj ne postoji u listi");
-                            Decision();
-                        }
-                    }
-                    foreach (var pair in playlist)
-                    {
-                        Console.WriteLine(pair.Key + " " + pair.Value);
-                    }
-                    break;
-                case 10:
-                    Console.WriteLine("Shuffle pjesama.");
-                    var ListOfKeys = new List<int>() { };
-                    foreach (var pair in playlist)
-                    {
-                        ListOfKeys.Add(pair.Key);
-                    }
-                    var shuffled = ListOfKeys.OrderBy(x => Guid.NewGuid()).ToList();
-                    var ShuffledMix = new Dictionary<int, string>(){};
-                    foreach (var element in shuffled)
-                    {
-                        ShuffledMix.Add(element, playlist[element]);
-                    }
-                    foreach(var pair in ShuffledMix)
-                    {
-                        Console.WriteLine(pair.Key+" "+pair.Value);
-                    }
-                    break;
-                default:
-                    break;
-            }
+                
 
             static int Menu()
             {
